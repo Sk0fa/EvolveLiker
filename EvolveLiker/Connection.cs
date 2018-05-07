@@ -36,10 +36,19 @@ namespace EvolveLiker
             return CheckOnLogin(response);
         }
 
-        public bool TryPutLike(string uri, string login)
+        public bool TryPutLike(string uri, PostData postData)
         {
-            var response = Web.GetString(this, uri);
-            return false;
+            //GenerateHeadersForPutLike();
+            return CheckOnPutLike(Web.PostString(this, uri, postData));
+        }
+
+        private void GenerateHeadersForPutLike()
+        {
+            WebClient.Headers.Add("Origin", "http://evolve-rp.su");
+            WebClient.Headers.Add(HttpRequestHeader.Referer, "http://evolve-rp.su/viewtopic.php?f=11&t=31746&start=2430");
+            WebClient.Headers.Add("Upgrade-Insecure-Requests", "1");
+            WebClient.Headers.Add(HttpRequestHeader.UserAgent, Web.UserAgent);
+            WebClient.Headers.Add(HttpRequestHeader.Accept, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
         }
 
         private static PostData GeneratePostData(string login, string password, string sid)
@@ -53,6 +62,11 @@ namespace EvolveLiker
                 .AddParam("redirect", "index.php")
                 .AddParam("login", "Вход")
                 .AddParam("redirect", "./ucp.php?mode=login");
+        }
+
+        private static bool CheckOnPutLike(string response)
+        {
+            return response.Contains("Вы успешно отблагодарили");
         }
 
         private static bool CheckOnLogin(string response)
