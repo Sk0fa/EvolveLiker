@@ -17,23 +17,21 @@ namespace EvolveLiker
         public static string GetString(Connection connection, string uri)
         {
             var response = connection.WebClient.DownloadString(uri);
-            UpdateCoockie(connection, uri);
             return response;
         }
 
         public static string PostString(Connection connection, string uri, PostData postData)
         {
-            var a = postData.GetParams();
             var oldContentType = connection.WebClient.Headers[HttpRequestHeader.ContentType];
             connection.WebClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+            var a = connection.WebClient.Headers[HttpRequestHeader.Cookie];
             var result = connection.WebClient.UploadString(uri, postData.GetParams());
             connection.WebClient.Headers[HttpRequestHeader.ContentType] = oldContentType;
-            UpdateCoockie(connection, uri);
             return result;
         }
 
         // TODO: Need REFACTOR!!!!
-        private static void UpdateCoockie(Connection connection, string uri)
+        public static void UpdateCoockie(Connection connection, string uri)
         {
             var rgx = new Regex(@"Set-Cookie:(.*?)\n");
             var matches = rgx.Matches(connection.WebClient.ResponseHeaders.ToString());

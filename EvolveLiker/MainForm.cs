@@ -20,10 +20,10 @@ namespace EvolveLiker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var c = new Connection();
-            var a = c.TryLogin("roflanTigran", "123123");
+            var acc = new Account("macrochel", "123123");
+            var a = acc.TryLogin();
             textBox1.Text += a + "\r\n";
-            var b = c.TryPutLike("http://evolve-rp.su/posting.php?mode=thx&f=11&p=1354046", new PostData().AddParam("thanks", ""));
+            var b = acc.TryPutLike("http://evolve-rp.su/viewtopic.php?f=11&t=31746&start=2410", "owl.50");
             textBox1.Text += b + "\n";
         }
     }
