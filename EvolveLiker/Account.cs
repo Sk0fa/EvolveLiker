@@ -12,6 +12,7 @@ namespace EvolveLiker
         public string Password { get; set; }
         public DateTime LastPutLike { get; private set; }
         public bool IsFreeForPutLike => DateTime.Now.Subtract(LastPutLike).Hours >= 2;
+        public bool IsLoggedIn { get; private set; }
 
         private readonly Connection connection;
 
@@ -19,13 +20,15 @@ namespace EvolveLiker
         {
             Login = login;
             Password = password;
+            IsLoggedIn = false;
             connection = new Connection();
             LastPutLike = DateTime.MinValue;
         }
 
         public bool TryLogin()
         {
-            return connection.TryLogin(Login, Password);
+            IsLoggedIn = connection.TryLogin(Login, Password);
+            return IsLoggedIn;
         }
 
         public bool TryPutLike(string uri, string login)
