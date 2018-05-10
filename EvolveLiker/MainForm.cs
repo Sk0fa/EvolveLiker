@@ -43,8 +43,9 @@ namespace EvolveLiker
 
         private void btnLoginAccs_Click(object sender, EventArgs e)
         {
-            var loginAccsCount = mainWorker.LoginInAccs();
-            lblAccountsLoggedIn.Text = loginAccsCount.ToString();
+            var task = Task.Run(() => mainWorker.LoginInAccs());
+            task.Wait();
+            lblAccountsLoggedIn.Text = task.Result.ToString();
         }
     }
 }

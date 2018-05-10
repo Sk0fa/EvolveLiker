@@ -13,6 +13,7 @@ namespace EvolveLiker
 
         public MainWorker()
         {
+            AccountContainer = new AccountContainer();
         }
 
         public int LoadAccounts(string filename)
@@ -23,7 +24,7 @@ namespace EvolveLiker
                 AccountContainer.AddAccount(new Account(acc.Split(':')[0], acc.Split(':')[1]));
             }
 
-            return AccountContainer.Accounts.Count();
+            return AccountContainer.Accounts.Count;
         }
 
         public int LoginInAccs()

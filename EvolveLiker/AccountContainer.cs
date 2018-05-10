@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EvolveLiker
@@ -27,6 +28,7 @@ namespace EvolveLiker
             {
                 if (!acc.IsLoggedIn)
                     acc.TryLogin();
+                    Thread.Sleep(2000);
             }
         }
 
