@@ -12,11 +12,11 @@ namespace EvolveLiker
     {
         public string TargetLogin { get; }
         public Dictionary<string, bool> UriList { get; }
-        public bool IsComplete => LikesCountComplete == LikesCount;
+        public bool IsComplete => likesCountComplete == LikesCount;
         public int LikesCount { get; }
-        private int LikesCountComplete;
-        private AccountContainer accountContainer;
-        private bool IsStop;
+        private int likesCountComplete;
+        private readonly AccountContainer accountContainer;
+        private bool isStop;
 
         public LikerTask(string targetLogin, int likesCount,
             AccountContainer accountContainer)
@@ -25,7 +25,7 @@ namespace EvolveLiker
             TargetLogin = targetLogin;
             UriList = new Dictionary<string, bool>();
             this.accountContainer = accountContainer;
-            IsStop = false;
+            isStop = false;
         }
 
         public void AddUri(string uri)
@@ -35,20 +35,20 @@ namespace EvolveLiker
 
         public void Start()
         {
-            IsStop = false;
-            while (!IsStop && !IsComplete)
+            isStop = false;
+            while (!isStop && !IsComplete)
             {
                 var uri = UriList.Where((k, v) => !k.Value).FirstOrDefault().Key;
                 UriList[uri] = true;
-                var likesComplete = accountContainer.PutLikes(uri, TargetLogin, LikesCount - LikesCountComplete);
-                LikesCountComplete += likesComplete;
-                Task.Delay(1000 * 60 * 60 * 2, new CancellationToken(IsStop));
+                var likesComplete = accountContainer.PutLikes(uri, TargetLogin, LikesCount - likesCountComplete);
+                likesCountComplete += likesComplete;
+                Task.Delay(1000 * 60 * 60 * 2, new CancellationToken(isStop));
             }
         }
 
         public void Stop()
         {
-            IsStop = true;
+            isStop = true;
         }
     }
 }

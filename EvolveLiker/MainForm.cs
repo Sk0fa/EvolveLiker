@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,18 +14,37 @@ namespace EvolveLiker
 {
     public partial class MainForm : Form
     {
+        private readonly MainWorker mainWorker;
+
         public MainForm()
         {
             InitializeComponent();
+            mainWorker = new MainWorker();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAddAccs_Click(object sender, EventArgs e)
         {
-            var acc = new Account("macrochel", "123123");
-            var a = acc.TryLogin();
-            textBox1.Text += a + "\r\n";
-            var b = acc.TryPutLike("http://evolve-rp.su/viewtopic.php?f=11&t=31746&start=2410", "owl.50");
-            textBox1.Text += b + "\n";
+            var ofd = new OpenFileDialog();
+
+            if (ofd.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                if (ofd.FileName != null)
+                {
+                    var accsCount = mainWorker.LoadAccounts(ofd.FileName);
+                    lblAccountsCount.Text = accsCount.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла ошибка: " + ex.Message);
+            }
+        }
+
+        private void btnLoginAccs_Click(object sender, EventArgs e)
+        {
+            var loginAccsCount = mainWorker.LoginInAccs();
+            lblAccountsLoggedIn.Text = loginAccsCount.ToString();
         }
     }
 }
