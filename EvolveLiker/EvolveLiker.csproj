@@ -68,6 +68,7 @@
     <Compile Include="AccountContainer.cs" />
     <Compile Include="Connection.cs" />
     <Compile Include="Finder.cs" />
+    <Compile Include="LikerTask.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
