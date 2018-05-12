@@ -13,29 +13,26 @@ namespace EvolveLiker
         public DateTime LastPutLike { get; private set; }
         public bool IsFreeForPutLike => DateTime.Now.Subtract(LastPutLike).Hours >= 2;
         public bool IsLoggedIn { get; private set; }
-
-        private readonly Connection connection;
+        public Connection Connection { get; private set; }
 
         public Account(string login, string password)
         {
             Login = login;
             Password = password;
             IsLoggedIn = false;
-            connection = new Connection();
+            Connection = new Connection();
             LastPutLike = DateTime.MinValue;
         }
 
         public bool TryLogin()
         {
-            IsLoggedIn = connection.TryLogin(Login, Password);
+            IsLoggedIn = Connection.TryLogin(Login, Password);
             return IsLoggedIn;
         }
 
-        public bool TryPutLike(string uri, string login)
+        public bool TryPutLike(string link)
         {
-            var post = Finder.FindPost(connection, uri, login);
-            var link = Finder.FindLikeLink(post);
-            var likePuts = connection.TryPutLike(link, new PostData().AddParam("thanks", ""));
+            var likePuts = Connection.TryPutLike(link, new PostData().AddParam("thanks", ""));
             LastPutLike = likePuts ? DateTime.Now : LastPutLike;
             return likePuts;
         }

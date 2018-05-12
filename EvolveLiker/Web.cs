@@ -24,7 +24,6 @@ namespace EvolveLiker
         {
             var oldContentType = connection.WebClient.Headers[HttpRequestHeader.ContentType];
             connection.WebClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-            var a = connection.WebClient.Headers[HttpRequestHeader.Cookie];
             var result = connection.WebClient.UploadString(uri, postData.GetParams());
             connection.WebClient.Headers[HttpRequestHeader.ContentType] = oldContentType;
             return result;

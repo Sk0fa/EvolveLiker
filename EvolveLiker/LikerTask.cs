@@ -14,13 +14,28 @@ namespace EvolveLiker
         public Dictionary<string, bool> UriList { get; }
         public bool IsComplete => likesCountComplete == LikesCount;
         public int LikesCount { get; }
-        private int likesCountComplete;
+        private int LikesCountComplete;
+        private int likesCountComplete
+        {
+            get
+            {
+                return LikesCountComplete;
+            }
+
+            set
+            {
+                LikesCountComplete = value;
+                mainWorker.LikerProgress(LikesCountComplete);
+            }
+        }
         private readonly AccountContainer accountContainer;
         private bool isStop;
+        private MainWorker mainWorker;
 
         public LikerTask(string targetLogin, int likesCount,
-            AccountContainer accountContainer)
+            AccountContainer accountContainer, MainWorker mainWorker)
         {
+            this.mainWorker = mainWorker;
             LikesCount = likesCount;
             TargetLogin = targetLogin;
             UriList = new Dictionary<string, bool>();

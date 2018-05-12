@@ -77,6 +77,7 @@
             this.btnAddTask.TabIndex = 2;
             this.btnAddTask.Text = "Новая задача";
             this.btnAddTask.UseVisualStyleBackColor = true;
+            this.btnAddTask.Click += new System.EventHandler(this.btnAddTask_Click);
             // 
             // btnStart
             // 
@@ -86,6 +87,7 @@
             this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Старт";
             this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // btnStop
             // 
@@ -95,6 +97,7 @@
             this.btnStop.TabIndex = 4;
             this.btnStop.Text = "Стоп";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // infoBox
             // 
