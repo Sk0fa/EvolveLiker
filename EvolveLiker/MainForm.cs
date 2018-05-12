@@ -14,6 +14,7 @@ namespace EvolveLiker
 {
     public partial class MainForm : Form
     {
+        // JUST FOR TEST
         private readonly MainWorker mainWorker;
 
         public MainForm()
