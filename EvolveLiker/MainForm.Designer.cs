@@ -123,11 +123,12 @@
             // lblWorkStatus
             // 
             this.lblWorkStatus.AutoSize = true;
+            this.lblWorkStatus.ForeColor = System.Drawing.Color.Green;
             this.lblWorkStatus.Location = new System.Drawing.Point(137, 109);
             this.lblWorkStatus.Name = "lblWorkStatus";
-            this.lblWorkStatus.Size = new System.Drawing.Size(29, 13);
+            this.lblWorkStatus.Size = new System.Drawing.Size(56, 13);
             this.lblWorkStatus.TabIndex = 11;
-            this.lblWorkStatus.Text = "Stop";
+            this.lblWorkStatus.Text = "Свободно";
             // 
             // lblProgressCommonCount
             // 

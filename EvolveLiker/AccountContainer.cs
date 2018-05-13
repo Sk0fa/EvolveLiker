@@ -35,9 +35,9 @@ namespace EvolveLiker
         public int PutLikes(string uri, string login, int count)
         {
             var putLikesCount = 0;
-            var accs = Accounts.Where(a => a.IsFreeForPutLike).Take(count).ToArray();
+            var accs = Accounts.Take(count).ToArray();
             var link = Finder.FindLikeLink(Finder.FindPost(Accounts[0].Connection, uri, login));
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < accs.Count(); i++)
             {
                 var succes = accs[i].TryPutLike(link);
                 if (succes)

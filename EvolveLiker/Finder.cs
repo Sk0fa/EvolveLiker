@@ -16,7 +16,7 @@ namespace EvolveLiker
             var doc = new HtmlDocument();
             doc.LoadHtml(response);
             var node = doc.DocumentNode.SelectSingleNode(
-                $"/html/body[@class=\'ltr\']/div[@id=\'wrap\']/div[@id=\'wrapcentre\']/div[@id=\'pagecontent\']/table[@class=\'tablebg\' and contains(., \'{login}\')]");
+                $"/html/body[@class=\'ltr\']/div[@id=\'wrap\']/div[@id=\'wrapcentre\']/div[@id=\'pagecontent\']/table[@class=\'tablebg\' and contains(.//tr/td/b, \'{login}\')]");
             var a = node.InnerHtml;
             return new Post(login, node.InnerHtml, uri);
         }

@@ -51,19 +51,33 @@ namespace EvolveLiker
         public void Start()
         {
             isStop = false;
-            while (!isStop && !IsComplete)
+            while (!isStop && !IsComplete && UriList.Where((k, v) => !k.Value).Count() != 0)
             {
                 var uri = UriList.Where((k, v) => !k.Value).FirstOrDefault().Key;
                 UriList[uri] = true;
                 var likesComplete = accountContainer.PutLikes(uri, TargetLogin, LikesCount - likesCountComplete);
                 likesCountComplete += likesComplete;
-                Task.Delay(1000 * 60 * 60 * 2, new CancellationToken(isStop));
+                SleepWithStopFlag(1000 * 60 * 60 * 2);
             }
         }
 
         public void Stop()
         {
             isStop = true;
+        }
+
+        private void SleepWithStopFlag(int ms)
+        {
+            var delay = Math.Min(ms, 1000);
+            var delayComplete = 0;
+            while (delayComplete < ms)
+            {
+                Thread.Sleep(delay);
+                delayComplete += delay;
+
+                if (isStop)
+                    break;
+            }
         }
     }
 }

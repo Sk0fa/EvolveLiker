@@ -56,10 +56,12 @@ namespace EvolveLiker
 
         private void btnLoginAccs_Click(object sender, EventArgs e)
         {
-            DisableButtons();
             var bw = new BackgroundWorker();
             bw.RunWorkerCompleted += LiginInAccsComplete;
             bw.DoWork += LoginInAccs;
+            DisableButtons();
+            lblWorkStatus.ForeColor = Color.OrangeRed;
+            lblWorkStatus.Text = "Логинимся в аккаунты";
             bw.RunWorkerAsync();
         }
 
@@ -86,6 +88,8 @@ namespace EvolveLiker
 
         private void LiginInAccsComplete(object sender, RunWorkerCompletedEventArgs e)
         {
+            lblWorkStatus.ForeColor = Color.Green;
+            lblWorkStatus.Text = "Свободно";
             EnableButtonsWithoutStartStop();
             lblAccountsLoggedIn.Text = e.Result.ToString();
         }
@@ -101,14 +105,26 @@ namespace EvolveLiker
             var bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
             bw.DoWork += Start;
+            bw.RunWorkerCompleted += LikerComplete;
             bw.ProgressChanged += LikerProgress;
-            bw.RunWorkerAsync();
+            lblWorkStatus.ForeColor = Color.OrangeRed;
+            lblWorkStatus.Text = "Крутим";
+            DisableButtons();
             btnStop.Enabled = true;
+            bw.RunWorkerAsync();
         }
 
         private void Start(object sender, DoWorkEventArgs e)
         {
             mainWorker.Start(sender as BackgroundWorker);
+        }
+
+        private void LikerComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            EnableButtonsWithoutStartStop();
+            lblWorkStatus.ForeColor = Color.Green;
+            lblWorkStatus.Text = "Свободно";
+            MessageBox.Show("Накрутка заверешена!");
         }
 
         public void LikerProgress(object sender, ProgressChangedEventArgs e)
