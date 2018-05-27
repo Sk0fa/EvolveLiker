@@ -8,7 +8,7 @@ namespace EvolveLiker
 {
     public class Account
     {       
-        public string Login { get; set; }
+        public string Login { get; private set; }
         public string Password { get; set; }
         public DateTime LastPutLike { get; private set; }
         public bool IsFreeForPutLike => DateTime.Now.Subtract(LastPutLike).Hours >= 2;
